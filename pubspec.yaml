@@ -25,6 +25,9 @@ dependencies:
   cupertino_icons: ^0.1.2
   location: ^2.3.5
   latlong: ^0.6.1
+  firebase_core: ^0.4.1 # add dependency for Firebase Core
+  firebase_analytics: ^5.0.6 # add dependency for Google Analytics for Firebase
+  cloud_firestore: ^0.12.10
 
 dev_dependencies:
   flutter_test:

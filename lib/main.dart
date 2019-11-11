@@ -1,14 +1,19 @@
 import 'dart:math';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:flutter/services.dart';
 import 'package:latlong/latlong.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  FirebaseAnalytics analytics = FirebaseAnalytics();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,6 +31,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: analytics),
+      ],
     );
   }
 }
@@ -65,6 +73,10 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     // Platform messages may fail, so we use a try/catch PlatformException.
     initLocation();
+    Firestore.instance
+        .collection('books')
+        .document()
+        .setData({'title': 'title', 'author': 'author'});
   }
 
   initLocation() async {
@@ -123,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   .map((task) => Container(
                           child: Row(children: [
                         Text(task["title"].toString()),
-                        Text(task["latitude"].toString()),
+                        Text(task["latitude"].toString() + ""),
                         Text(task["longitude"].toString()),
                         Text(isInLocation(task) ? "OK" : ""),
                       ])))

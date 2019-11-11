@@ -1,4 +1,4 @@
-package com.example.geotask
+package com.yanyo.geotask
 
 import android.os.Bundle
 import io.flutter.app.FlutterActivity
